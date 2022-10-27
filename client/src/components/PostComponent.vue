@@ -1,34 +1,12 @@
 <template>
-  <h1 style="margin-top:20px ; margin-bottom:10px">Ultimi Post</h1>
   <div class="container">
     <div v-for="post in Posts" :key="post.id">
-      <div class="card">
-        <div class="card-header" style="font-weight: bold ; font-size: 20px">{{ post.username }}</div>
+      <div class="card bg-light mb-3 shadow-lg">
         <div class="card-body">
-          <h5 class="card-title">{{ post.text }}</h5>
-          <div ref="commentCollapse" class="collapse navbar-collapse" id="commentToggler">
-            <div class="container">
-              <label for="formGroupExampleInput">Commenta</label>
-              <input class="form-control" type="text" placeholder="scrivi il tuo username" v-model="Comment.username" />
-              <input class="form-control" type="text" placeholder="scrivi il tuo commento" v-model="Comment.comment" />
-              <div class="btn btn-dark" @click="addComment(post._id)">
-                Invia
-              </div>
-            </div>
-          </div>
-          <button type="ciao" class="btn btn-dark" @click="delatePost(post._id)">
-            delate
-          </button>
-          <div v-for="comment in Comments" :key="comment.post_id">
-            <div v-if="comment.post_id === post._id">
-              <h5 class="card-text">
-                {{ comment.username }}: {{ comment.comment }}
-              </h5>
-            </div>
-          </div>
-        </div>
-        <div class="card-footer">
-          {{ post.createdAt }}
+          <h5 class="card-title" style="margin-bottom:15px">{{ post.username }}</h5>
+          <img class="card-img-top" :src="`${ServerUrl}/${post.image}`" style="max-width: 100% ; height: 50%;">
+          <h5 class="card-text" style="margin-top: 20px;">{{post.text}}</h5>
+          <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
         </div>
       </div>
     </div>
@@ -42,6 +20,7 @@ export default {
   name: "PostComponent",
   data() {
     return {
+      ServerUrl,
       Posts: {},
       Comments: {},
       User: { username: "", title: "", description: "" },
@@ -100,8 +79,11 @@ export default {
 .btn {
   margin: 5px;
 }
-
 .card {
   margin-bottom: 30px;
+}
+
+.container {
+  margin-top:30px;
 }
 </style>
