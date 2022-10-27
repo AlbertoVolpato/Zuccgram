@@ -56,19 +56,30 @@ export default {
   },
   methods: {
     uploadImage(event) {
-      this.file = event.target.files[0] ;
+      console.log(event)
+      this.file = event.target.files[0] ; //.target.files[0]
+      /*const reader = new FileReader()
+      reader.readAsDataURL(event.target.files[0])
+      reader.onload = () => {this.file = reader.result; console.log(this.file)}*/
+      
       console.log(this.file)
     },
     addPost() {
-      console.log(this.file)
-
+    console.log(this.file)
+    const formData = new FormData();
+      formData.append('image',this.file);
+      formData.append('username',this.User.username);
+      formData.append('text',this.User.text);
+    console.log(formData)
     let newPost = {
       username: this.User.username,
       text: this.User.text,
-      image: this.file,
+      image: formData,
     };
+
+    console.log(newPost)
     axios
-      .post("http://localhost:5000/api/posts", newPost)
+      .post("http://localhost:5000/api/posts", formData)
     //.then(window.location.reload());
   },
   },
